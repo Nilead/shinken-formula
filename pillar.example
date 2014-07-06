@@ -7,3 +7,7 @@ shinken:
       password: 'admin'
       email: 'root@localhost'
       is_admin: 1
+  # host groups
+  host_groups:
+    linux:
+      alias: 'Linux servers'

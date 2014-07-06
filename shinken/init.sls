@@ -106,4 +106,16 @@ shinken install webui:
       - service: shinken
 {% endfor %}
 
+{% for group, group_info in salt['pillar.get']('shinken:host_groups', {}).items() %}
+/etc/shinken/hostgroups/{{ group }}.cfg:
+  file.managed:
+    - source: salt://shinken/files/hostgroup.cfg
+    - template: jinja
+    - user: shinken
+    - context:
+        group: {{ group }}
+        group_info: {{ group_info }}
+    - watch_in:
+      - service: shinken
+{% endfor %}
 
