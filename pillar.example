@@ -1,0 +1,9 @@
+shinken:
+  # dd if=/dev/random count=1 bs=1k 2>/dev/null | base64
+  auth_secret: 'xeSPAHiZX1a3HYoojzUdKQdympuTbbg+cY8='
+  users:
+    # you want at least to define the admin
+    admin:
+      password: 'admin'
+      email: 'root@localhost'
+      is_admin: 1
