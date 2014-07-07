@@ -8,6 +8,15 @@ shinken-deps:
       - python-pycurl
       - python-setuptools
       - python-sqlite
+      - nagios-plugins
+
+/usr/lib/nagios/plugins/check_icmp:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 4555
+    - require:
+      - pkg: shinken-deps
 
 shinken:
   user.present:
