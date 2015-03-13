@@ -1,0 +1,4 @@
+{% set shinken = salt['grains.filter_by']({
+  'default' : {
+  }
+}, merge=salt['pillar.get']('shinken:lookup'), default='default') %}
