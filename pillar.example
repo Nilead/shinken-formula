@@ -1,9 +1,32 @@
 # -*- mode:yaml -*-
 
 shinken:
+  #TODO: use "worker" to match our salt states
   poller:
     tags: DMZ pinger
     realm: All
+
+  # default snmp community
+  snmp_community: public
+
+
+  primary:
+    config_path: salt://whatevs
+
+  web:
+    graphite_host: foo
+
+  # where to get shinken configuration from
+  config: salt://shinken/config
+
+
+
+    # used to fill in ssh_known_hosts
+    host: git.acceleration.net
+    # id file for git+ssh
+    identity: /root/.ssh/shinken_id_rsa
+    # git clone $repo
+    repo: gitolite@git.acceleration.net:shinken-config/test
 
   # dd if=/dev/random count=1 bs=1k 2>/dev/null | base64
   auth_secret: 'xeSPAHiZX1a3HYoojzUdKQdympuTbbg+cY8='

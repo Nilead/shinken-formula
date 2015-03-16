@@ -18,5 +18,15 @@
 shinken install {{module}}:
   cmd.run:
     - user: shinken
-    - unless: test -d /var/lib/shinken/modules/{{module}}
+    - unless: shinken inventory | grep {{module}}
+{%- endmacro %}
+
+{% macro shinken_config(file, key, value) %}
+/etc/shinken/{{file}} {{key}}:
+  file.replace:
+    - name: /etc/shinken/{{file}}
+    - pattern: |
+        ^(\s+)#?{{key}}(\s.*)?$
+    - repl: |
+        \1{{key}} {{ value }}
 {%- endmacro %}

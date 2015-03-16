@@ -16,18 +16,11 @@ shinken:
       - pkg: shinken-deps
       - user: shinken
 
-  # service.running:
-  #   - enable: True
-  #   - reload: False
-  #   - watch:
-  #     - pip: shinken
-  #     - ini: /etc/shinken/daemons/*
-
-  # cmd.wait:
-  #   - user: shinken
-  #   - name: shinken --init
-  #   - watch:
-  #       - pip: shinken
+  cmd.wait:
+    - user: shinken
+    - name: shinken --init
+    - watch:
+        - pip: shinken
 
 # turn off all daemons for starters, we'll turn them on in other sls
 # files

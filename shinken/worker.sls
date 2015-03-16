@@ -1,3 +1,4 @@
+{% from 'shinken/macros.sls' import shinken_config %}
 {% set poller = salt['grains.filter_by']({
   'default' : {
     'tags': 'None',
@@ -7,29 +8,19 @@
 
 
 include:
-  - shinken.base
+  - shinken.poller-deps
 
-# just pollerd
 
-shinken-poller:
+shinken-worker:
+  grains.present:
+    - value: True
+  # just pollerd
   service.running:
+    - name: shinken-poller
     - enable: True
     - watch:
         - pip: shinken
         - file: /etc/shinken/pollers/*
 
-/etc/shinken/pollers/poller-master.cfg tags:
-  file.replace:
-    - name: /etc/shinken/pollers/poller-master.cfg
-    - pattern: |
-        ^(\s+)#poller_tags\s.*$
-    - repl: |
-        \1 poller_tags {{poller.tags}}
-
-/etc/shinken/pollers/poller-master.cfg realm:
-  file.replace:
-    - name: /etc/shinken/pollers/poller-master.cfg
-    - pattern: |
-        ^(\s+realm)\s.*$
-    - repl: |
-        \1 {{poller.realm}}
+{{shinken_config('pollers/poller-master.cfg', 'poller_tags', poller.tags)}}
+{{shinken_config('pollers/poller-master.cfg', 'realm', poller.realm)}}
