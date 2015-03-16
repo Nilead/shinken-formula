@@ -1,6 +1,10 @@
 # -*- mode:yaml -*-
 
 shinken:
+  poller:
+    tags: DMZ pinger
+    realm: All
+
   # dd if=/dev/random count=1 bs=1k 2>/dev/null | base64
   auth_secret: 'xeSPAHiZX1a3HYoojzUdKQdympuTbbg+cY8='
   users:

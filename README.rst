@@ -31,11 +31,18 @@ Configures this node as the primary shinken node.
 ``shinken.worker``
 ------------------
 
-Runs checks and reports back to the primary
+Runs checks and reports back
 
 * poller
-* scheduler
 
+Important pillar settings:
+
+* ``shinken:poller:tags`` any poller tags
+* ``shinken:poller:realm`` what realm this poller is for
+
+Example::
+
+  salt-call state.sls shinken.worker pillar='{"shinken":{"poller":{"realm":"w1"}}}'
 
 ``shinken.secondary``
 ---------------------
