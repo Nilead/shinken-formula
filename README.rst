@@ -42,7 +42,7 @@ Important pillar settings:
 
 * ``shinken:snmp_community`` default snmp community for checks
 * ``shinken:primary:graphite_host`` server hosting graphite/carbon
-* ``shinken:primary:config_path`` salt path to the config repo, for
+* ``shinken:primary:shared_config`` salt path to the config repo, for
   use in a `file.recurse`_
 
 .. _file.recurse: http://docs.saltstack.com/en/latest/ref/states/all/salt.states.file.html#salt.states.file.recurse

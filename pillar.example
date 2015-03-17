@@ -9,13 +9,8 @@ shinken:
   # default snmp community
   snmp_community: public
 
-
   primary:
-    config_path: salt://whatevs
-    graphite_host: foo
-
-  # where to get shinken configuration from
-  config: salt://shinken/config
-
-  #lookups:
-
+    # the config that must be shared between arbiters
+    shared_config: salt://whatevs
+    # host name for your graphite server
+    graphite_host: graphite
