@@ -1,16 +1,16 @@
 {% from 'shinken/macros.sls' import shinken_config, enable_module %}
 
-{% set primary = salt['grains.filter_by']({
-  'default' : {
+{% set primary = salt['pillar.get']('shinken', default={
     'auth_secret': salt['key.finger'](),
-    'graphite': {
-      'host': grains['fqdn'],
-      'uri': 'http://' + grains['fqdn']
-    },
     'scheduler_host': grains['fqdn'],
-    'shared_config': None
-  }
-}, merge=salt['pillar.get']('shinken'), default='default') %}
+}, merge=True) %}
+
+{% set graphite = salt['pillar.get']('shinken:graphite', default={
+    'host': grains['fqdn'],
+    'uri': 'http://' + grains['fqdn']
+}, merge=True) %}
+
+
 
 include:
   - shinken.config
@@ -40,13 +40,13 @@ shinken-primary:
 
 # configure the broker
 {{shinken_config('brokers/broker-master.cfg', 'modules', 'webui,graphite')}}
-{{shinken_config('modules/graphite.cfg', 'host', primary.graphite.host)}}
+{{shinken_config('modules/graphite.cfg', 'host', graphite.host)}}
 
 
 # configure the web ui
 {{shinken_config('modules/webui.cfg', 'auth_secret', primary.auth_secret)}}
 {{shinken_config('modules/webui.cfg', 'modules', 'auth-cfg-password,ui-graphite,SQLitedb')}}
-{{shinken_config('modules/ui-graphite.cfg', 'uri', primary.graphite.uri)}}
+{{shinken_config('modules/ui-graphite.cfg', 'uri', graphite.uri)}}
 
 # configure the scheduler
 {{shinken_config('schedulers/scheduler-master.cfg', 'modules', 'MemcacheRetention')}}

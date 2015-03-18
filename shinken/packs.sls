@@ -17,6 +17,7 @@ include:
     - file_mode: 664
   cmd.wait:
     - name: shinken install --local /opt/packs/{{key}}
+    - unless: shinken inventory | grep {{key}}
     - user: shinken
     - watch:
         - file: /opt/packs/{{key}}
