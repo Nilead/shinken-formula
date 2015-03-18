@@ -25,6 +25,7 @@ shinken install {{module}}:
 /etc/shinken/{{file}} {{key}}:
   file.replace:
     - name: /etc/shinken/{{file}}
+    - backup: False # shinken seems to read backup files?
     - pattern: |
         ^(\s+)#?{{key}}(\s.*)?$
     - repl: |

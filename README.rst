@@ -51,6 +51,7 @@ stored in git, and shared using gitfs_. salt://shinken/config
 * reactionner
 * receiver
   * port 5667 - nsca_ with xor encryption
+  * port 7760 - `ws_arbiter`_ for submitting external commands
 * poller
   * handles untagged hosts
 * scheduler
@@ -67,6 +68,7 @@ Important pillar settings:
 .. _file.recurse: http://docs.saltstack.com/en/latest/ref/states/all/salt.states.file.html#salt.states.file.recurse
 .. _nsca: http://exchange.nagios.org/directory/Addons/Passive-Checks/NSCA--2D-Nagios-Service-Check-Acceptor/details
 .. _gitfs: http://docs.saltstack.com/en/latest/topics/tutorials/gitfs.html
+.. _ws_arbiter: https://github.com/shinken-monitoring/mod-ws-arbiter
 
 ``shinken.worker``
 ------------------

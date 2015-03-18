@@ -30,7 +30,7 @@ poller-deps:
 # https://github.com/shinken-monitoring/pack-linux-snmp/issues/10
 /var/lib/shinken/libexec/utils.pm:
   file.copy:
-    - target: /usr/lib/nagios/plugins/utils.pm
+    - source: /usr/lib/nagios/plugins/utils.pm
     - user: shinken
     - group: shinken
     - require:
