@@ -17,3 +17,8 @@ shinken:
     host: graphite
     # uri for rendering graphs in the shinken ui
     uri: http://graphite/
+
+  # custom packs to install; key : source
+  packs:
+    adw: salt://my-custom-pack
+    pack-windows: shinken.io # if the source is shinken.io, then pull from there

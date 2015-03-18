@@ -7,6 +7,8 @@
 
 include:
   - shinken.base
+  # get custom config and checks
+  - shinken.packs
 
 poller-deps:
   pkg.installed:
@@ -27,8 +29,10 @@ poller-deps:
 
 # https://github.com/shinken-monitoring/pack-linux-snmp/issues/10
 /var/lib/shinken/libexec/utils.pm:
-  file.symlink:
+  file.copy:
     - target: /usr/lib/nagios/plugins/utils.pm
+    - user: shinken
+    - group: shinken
     - require:
       - pkg: poller-deps
 
@@ -49,11 +53,6 @@ snmp-configuration:
     - name: download-mibs
     - watch:
       - pkg: poller-deps
-
-
-{% for mod in ['cisco', 'router', 'linux-snmp', 'switch'] %}
-{{enable_module(mod)}}
-{% endfor %}
 
 /etc/shinken/resource.d/snmp.cfg:
   file.replace:
