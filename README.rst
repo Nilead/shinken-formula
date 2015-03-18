@@ -32,7 +32,6 @@ stored in git, and shared using gitfs_. salt://shinken/config
 * reactionner
 * receiver
   * port 5667 - nsca_ with xor encryption
-  * port 25826 - collectd_
 * poller
   * handles untagged hosts
 * scheduler
@@ -47,18 +46,7 @@ Important pillar settings:
   `file.recurse`_
 
 .. _file.recurse: http://docs.saltstack.com/en/latest/ref/states/all/salt.states.file.html#salt.states.file.recurse
-.. _collectd: https://collectd.org/
 .. _nsca: http://exchange.nagios.org/directory/Addons/Passive-Checks/NSCA--2D-Nagios-Service-Check-Acceptor/details
-
-collectd integration
-++++++++++++++++++++
-
-* Use the `network plugin`_ to send data from the monitored server to
-  the shinken primary
-* make a `define host` entry for the monitored server
-* TODO: figure out how to alert/make services
-
-.. _network plugin: https://collectd.org/wiki/index.php/Plugin:Network
 
 
 ``shinken.worker``

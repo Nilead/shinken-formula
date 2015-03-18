@@ -33,7 +33,7 @@ shinken-primary:
      - file: /etc/shinken/*
 
 # install/enable some modules
-{% for mod in ['webui', 'auth-cfg-password', 'sqlitedb', 'graphite', 'ui-graphite', 'retention-memcache', 'nsca', 'mod-collectd'] %}
+{% for mod in ['webui', 'auth-cfg-password', 'sqlitedb', 'graphite', 'ui-graphite', 'retention-memcache', 'nsca'] %}
 {{enable_module(mod)}}
 {% endfor %}
 
@@ -52,7 +52,7 @@ shinken-primary:
 {{shinken_config('schedulers/scheduler-master.cfg', 'address', primary.scheduler_host)}}
 
 # configure the receiver
-{{shinken_config('receivers/receiver-master.cfg', 'modules', 'nsca,Collectd')}}
+{{shinken_config('receivers/receiver-master.cfg', 'modules', 'nsca')}}
 
 # get the shared shinken config
 {% if primary.shared_config %}
