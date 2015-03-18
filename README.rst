@@ -31,6 +31,13 @@ Example::
 
 .. _packs: http://shinken.readthedocs.org/en/latest/14_contributing/create-and-push-packs.html
 
+Syncronizing config
+-------------------
+
+The configuration about what hosts / services to monitor need to be
+shared between all arbiters. This formula depends on you sharing this
+via a git repository. You specify the git information via pillars.
+
 Available states
 ================
 
@@ -62,10 +69,10 @@ Important pillar settings:
 * ``shinken:snmp_community`` default snmp community
 * ``shinken:graphite:host`` host name for sending metrics in
 * ``shinken:graphite:uri`` uri for rendering graphs in the shinken ui
-* ``shinken:shared_config`` salt path to the config repo, for use in a
-  `file.recurse`_ TODO: do this as a pack?
+* ``shinken:config_repo:host`` git server
+* ``shinken:config_repo:uri`` git clone URI
+* ``shinken:config_repo:ssh_id`` ssh identity to use
 
-.. _file.recurse: http://docs.saltstack.com/en/latest/ref/states/all/salt.states.file.html#salt.states.file.recurse
 .. _nsca: http://exchange.nagios.org/directory/Addons/Passive-Checks/NSCA--2D-Nagios-Service-Check-Acceptor/details
 .. _gitfs: http://docs.saltstack.com/en/latest/topics/tutorials/gitfs.html
 .. _ws_arbiter: https://github.com/shinken-monitoring/mod-ws-arbiter

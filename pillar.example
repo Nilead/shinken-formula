@@ -9,8 +9,13 @@ shinken:
   # default snmp community
   snmp_community: public
 
-  # the config that must be shared between arbiters; hosts
-  shared_config: salt://whatevs
+  # the config that must be shared between arbiters
+  config_repo:
+    host: git.acceleration.net
+    # git clone URI
+    uri: gitolite@git.acceleration.net:shinken-test-config
+    # which key to use, should be on the minion via other means
+    ssh_id: /etc/shinken-deploy.key
 
   graphite:
     # host name for sending metrics in

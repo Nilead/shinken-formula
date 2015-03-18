@@ -13,6 +13,7 @@
 }, merge=salt['pillar.get']('shinken'), default='default') %}
 
 include:
+  - shinken.config
   - shinken.poller-deps
 
 primary-deps:
@@ -55,17 +56,8 @@ shinken-primary:
 {{shinken_config('receivers/receiver-master.cfg', 'modules', 'nsca,ws-arbiter')}}
 
 # get the shared shinken config
-{% if primary.shared_config %}
-/etc/shinken/shared:
-  file.recurse:
-    - source: {{primary.shared_config}}
-    - user: shinken
-    - group: shinken
-    - dir_mode: 755
-    - file_mode: 664
-
 /etc/shinken/shinken.cfg:
   file.append:
-    - text: "cfg_dir=shared"
+    - text: "cfg_dir=/opt/shinken-config"
 
-{% endif %}
+
