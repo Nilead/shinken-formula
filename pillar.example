@@ -9,8 +9,11 @@ shinken:
   # default snmp community
   snmp_community: public
 
-  primary:
-    # the config that must be shared between arbiters
-    shared_config: salt://whatevs
-    # host name for your graphite server
-    graphite_host: graphite
+  # the config that must be shared between arbiters; hosts
+  shared_config: salt://whatevs
+
+  graphite:
+    # host name for sending metrics in
+    host: graphite
+    # uri for rendering graphs in the shinken ui
+    uri: http://graphite/

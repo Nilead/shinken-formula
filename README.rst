@@ -40,10 +40,11 @@ stored in git, and shared using gitfs_. salt://shinken/config
 
 Important pillar settings:
 
-* ``shinken:snmp_community`` default snmp community for checks
-* ``shinken:primary:graphite_host`` server hosting graphite/carbon
-* ``shinken:primary:shared_config`` salt path to the config repo, for
-  use in a `file.recurse`_
+* ``shinken:snmp_community`` default snmp community
+* ``shinken:graphite:host`` host name for sending metrics in
+* ``shinken:graphite:uri`` uri for rendering graphs in the shinken ui
+* ``shinken:shared_config`` salt path to the config repo, for use in a
+  `file.recurse`_
 
 .. _file.recurse: http://docs.saltstack.com/en/latest/ref/states/all/salt.states.file.html#salt.states.file.recurse
 .. _collectd: https://collectd.org/

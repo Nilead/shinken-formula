@@ -3,11 +3,14 @@
 {% set primary = salt['grains.filter_by']({
   'default' : {
     'auth_secret': salt['key.finger'](),
-    'graphite_host': grains['fqdn'],
+    'graphite': {
+      'host': grains['fqdn'],
+      'uri': 'http://' + grains['fqdn']
+    },
     'scheduler_host': grains['fqdn'],
     'shared_config': None
   }
-}, merge=salt['pillar.get']('shinken:primary'), default='default') %}
+}, merge=salt['pillar.get']('shinken'), default='default') %}
 
 include:
   - shinken.poller-deps
@@ -36,13 +39,13 @@ shinken-primary:
 
 # configure the broker
 {{shinken_config('brokers/broker-master.cfg', 'modules', 'webui,graphite')}}
-{{shinken_config('modules/graphite.cfg', 'host', primary.graphite_host)}}
+{{shinken_config('modules/graphite.cfg', 'host', primary.graphite.host)}}
 
 
 # configure the web ui
 {{shinken_config('modules/webui.cfg', 'auth_secret', primary.auth_secret)}}
 {{shinken_config('modules/webui.cfg', 'modules', 'auth-cfg-password,ui-graphite,SQLitedb')}}
-{{shinken_config('modules/ui-graphite.cfg', 'uri', 'http://' + primary.graphite_host)}}
+{{shinken_config('modules/ui-graphite.cfg', 'uri', primary.graphite.uri)}}
 
 # configure the scheduler
 {{shinken_config('schedulers/scheduler-master.cfg', 'modules', 'MemcacheRetention')}}
