@@ -19,6 +19,8 @@ shinken install {{module}}:
   cmd.run:
     - user: shinken
     - unless: shinken inventory | grep {{module}}
+    - require:
+        - pip: shinken
 {%- endmacro %}
 
 {% macro shinken_config(file, key, value) %}
@@ -30,4 +32,6 @@ shinken install {{module}}:
         ^(\s+)#?{{key}}(\s.*)?$
     - repl: |
         \1{{key}} {{ value }}
+    - require:
+        - pip: shinken
 {%- endmacro %}

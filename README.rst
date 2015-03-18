@@ -58,14 +58,11 @@ that the master node has configuration about all daemons. See the
 * receiver
   * port 5667 - nsca_ with xor encryption
   * port 7760 - `ws_arbiter`_ for submitting external commands
-* poller
-  * handles untagged hosts
 * scheduler
   * retains status in memcached
 
 Important pillar settings:
 
-* ``shinken:snmp_community`` default snmp community
 * ``shinken:graphite:host`` host name for sending metrics in
 * ``shinken:graphite:uri`` uri for rendering graphs in the shinken ui
 * ``shinken:config_repo:host`` git server
@@ -83,10 +80,11 @@ Important pillar settings:
 Runs checks and reports back.
 
 * poller
+* scheduler
 
 Important pillar settings:
 
-* ``shinken:snmp_community`` default snmp community for checks
+* ``shinken:worker:snmp_community`` default snmp community for checks
 * ``shinken:packs`` what extra packs to install
 
 

@@ -13,28 +13,32 @@
 
 
 include:
+  - shinken.base
   - shinken.config
-  - shinken.poller-deps
 
 primary-deps:
   pkg.installed:
     - pkgs:
       - memcached
+  grains.present:
+    - name: shinken-primary
+    - value: True
 
 # all daemons
-shinken-primary:
-  grains.present:
-    - value: True
+{% for service in ['arbiter', 'broker', 'reactionner', 'receiver'] %}
+
+shinken service - {{service}}:
   service.running:
-   - name: shinken
-   - enable: True
-   - reload: False
-   - watch:
-     - pip: shinken
-     - file: /etc/shinken/*
+    - name: shinken-{{service}}
+    - enable: True
+    - watch:
+      - pip: shinken
+      - file: /etc/shinken/*
+
+{% endfor %}
 
 # install/enable some modules
-{% for mod in ['webui', 'auth-cfg-password', 'sqlitedb', 'graphite', 'ui-graphite', 'retention-memcache', 'nsca', 'ws-arbiter'] %}
+{% for mod in ['webui', 'auth-cfg-password', 'sqlitedb', 'graphite', 'ui-graphite', 'nsca', 'ws-arbiter'] %}
 {{enable_module(mod)}}
 {% endfor %}
 
@@ -48,18 +52,24 @@ shinken-primary:
 {{shinken_config('modules/webui.cfg', 'modules', 'auth-cfg-password,ui-graphite,SQLitedb')}}
 {{shinken_config('modules/ui-graphite.cfg', 'uri', graphite.uri)}}
 
-# configure the scheduler
-{{shinken_config('schedulers/scheduler-master.cfg', 'modules', 'MemcacheRetention')}}
-{{shinken_config('schedulers/scheduler-master.cfg', 'address', primary.scheduler_host)}}
 
 # configure the receiver
 {{shinken_config('receivers/receiver-master.cfg', 'modules', 'nsca,ws-arbiter')}}
+
+# remove some defaults
+/etc/shinken/pollers/poller-master.cfg:
+  file.absent:
+    - require:
+        - pip: shinken
+/etc/shinken/schedulers/scheduler-master.cfg:
+  file.absent:
+    - require:
+        - pip: shinken
 
 # get the shared shinken config
 /etc/shinken/shinken.cfg:
   file.append:
     - text: "cfg_dir=/opt/shinken-config"
-
 
 # write out config for workers
 
@@ -74,11 +84,28 @@ shinken-primary:
     - mode: 444
     - defaults:
         host: {{host}}
-        tags: ''
+        tags: 'None'
         realm: ''
+{% if conf %}
     - context:
 {% for key, value in conf.iteritems() %}
         {{ key }}: {{ value }}
 {% endfor %}
+{% endif %}
+
+/etc/shinken/schedulers/{{host}}.cfg:
+  file.managed:
+    - source: salt://shinken/files/scheduler.cfg
+    - template: jinja
+    - mode: 444
+    - defaults:
+        host: {{host}}
+        realm: 'All'
+{% if conf %}
+    - context:
+{% for key, value in conf.iteritems() %}
+        {{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
 
 {% endfor %}
