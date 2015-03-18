@@ -20,7 +20,8 @@ include:
     - user: shinken
     - watch:
         - file: /opt/packs/{{key}}
-
+    - watch_in:
+        - module: shinken-arbiter.reload
 {% else %}
 
 {{enable_module(key)}}

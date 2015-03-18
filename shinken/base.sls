@@ -28,3 +28,10 @@ shinken:
 {% for d in ['brokerd', 'pollerd', 'reactionnerd', 'receiverd', 'schedulerd'] %}
 # {disable_daemon(d)}
 {% endfor %}
+
+# some states to trigger restarts
+
+shinken-arbiter.reload:
+  module.wait:
+    - name: service.reload
+    - m_name: shinken-arbiter
