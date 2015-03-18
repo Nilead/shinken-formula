@@ -48,9 +48,8 @@ Available states
 -------------------
 
 Configures this node as the primary Shinken_ node. Shinken_ requires
-that the master node has configuration about all daemons. This is
-doable with salt, but easier via git. Assumes all Shinken_ config is
-stored in git, and shared using gitfs_. salt://shinken/config
+that the master node has configuration about all daemons. See the
+``workers`` key in the ``pillar.example``.
 
 * arbiter
 * broker
@@ -72,27 +71,24 @@ Important pillar settings:
 * ``shinken:config_repo:host`` git server
 * ``shinken:config_repo:uri`` git clone URI
 * ``shinken:config_repo:ssh_id`` ssh identity to use
+* ``shinken:workers`` data about the the worker nodes, used to
+  generate shinken config
 
 .. _nsca: http://exchange.nagios.org/directory/Addons/Passive-Checks/NSCA--2D-Nagios-Service-Check-Acceptor/details
-.. _gitfs: http://docs.saltstack.com/en/latest/topics/tutorials/gitfs.html
 .. _ws_arbiter: https://github.com/shinken-monitoring/mod-ws-arbiter
 
 ``shinken.worker``
 ------------------
 
-Runs checks and reports back
+Runs checks and reports back.
 
 * poller
 
 Important pillar settings:
 
 * ``shinken:snmp_community`` default snmp community for checks
-* ``shinken:poller:tags`` any poller tags
-* ``shinken:poller:realm`` what realm this poller is for
+* ``shinken:packs`` what extra packs to install
 
-Example::
-
-  salt-call state.sls shinken.worker pillar='{"shinken":{"poller":{"realm":"w1"}}}'
 
 TODO ``shinken.secondary``
 --------------------------

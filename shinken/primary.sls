@@ -61,3 +61,24 @@ shinken-primary:
     - text: "cfg_dir=/opt/shinken-config"
 
 
+# write out config for workers
+
+{% set workers = salt['pillar.get']('shinken:workers', {}) %}
+
+{% for host, conf in workers.items() %}
+
+/etc/shinken/pollers/{{host}}.cfg:
+  file.managed:
+    - source: salt://shinken/files/poller.cfg
+    - template: jinja
+    - mode: 444
+    - defaults:
+        host: {{host}}
+        tags: ''
+        realm: ''
+    - context:
+{% for key, value in conf.iteritems() %}
+        {{ key }}: {{ value }}
+{% endfor %}
+
+{% endfor %}

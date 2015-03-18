@@ -1,11 +1,6 @@
 # -*- mode:yaml -*-
 
 shinken:
-  #TODO: use "worker" to match our salt states
-  poller:
-    tags: DMZ pinger
-    realm: All
-
   # default snmp community
   snmp_community: public
 
@@ -17,13 +12,23 @@ shinken:
     # which key to use, should be on the minion via other means
     ssh_id: /etc/shinken-deploy.key
 
+  # custom packs to install; [key] : [source]
+  packs:
+    adw: salt://my-custom-pack
+    windows: # if the source is blank, install from shinken.io
+
+  # specify the pollers
+  workers:
+    # keys are hostnames that DNS resolve to your worker nodes
+    host-1:
+      tags: tag1
+      #realm: other-realm
+    host-2:
+      tags: tag2 tag3
+
+  # configure graphite connection
   graphite:
     # host name for sending metrics in
     host: graphite
     # uri for rendering graphs in the shinken ui
     uri: http://graphite/
-
-  # custom packs to install; key : source
-  packs:
-    adw: salt://my-custom-pack
-    pack-windows: shinken.io # if the source is shinken.io, then pull from there
