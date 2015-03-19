@@ -64,10 +64,8 @@ shinken-worker:
   grains.present:
     - value: True
 
+{{enable_module('pickle-retention-file-generic')}}
 {{enable_module('pickle-retention-file-scheduler')}}
-
-# configure the scheduler
-{{shinken_config('schedulers/scheduler-master.cfg', 'modules', 'pickle-retention-file')}}
 
 # enable services
 {% for service in ['scheduler', 'poller'] %}

@@ -38,7 +38,7 @@ shinken service - {{service}}:
 {% endfor %}
 
 # install/enable some modules
-{% for mod in ['webui', 'auth-cfg-password', 'sqlitedb', 'graphite', 'ui-graphite', 'nsca', 'ws-arbiter'] %}
+{% for mod in ['webui', 'auth-cfg-password', 'sqlitedb', 'graphite', 'ui-graphite', 'nsca', 'ws-arbiter', 'pickle-retention-file-scheduler', 'pickle-retention-file-generic'] %}
 {{enable_module(mod)}}
 {% endfor %}
 
