@@ -1,8 +1,12 @@
 # -*- mode:yaml -*-
 
+# put the shinken config in one pillar file and include it on every
+# host you want run shinken with; this one set of config is designed
+# to work for both poller and primary nodes
+
 shinken:
   # default snmp community
-  snmp_community: public
+  # snmp_community: public
 
   # the config that must be shared between arbiters
   config_repo:
@@ -14,21 +18,27 @@ shinken:
 
   # custom packs to install; [key] : [source]
   packs:
-    adw: salt://my-custom-pack
     windows: # if the source is blank, install from shinken.io
+    linux-snmp:
+    # for local packs, the key must match the name in your pack's
+    # package.json
+    my-unpublished-pack: salt://my-custom-pack
+
 
   # specify the pollers
-  workers:
+  pollers:
     # keys are hostnames that DNS resolve to your worker nodes
     host-1:
       tags: tag1
       #realm: other-realm
     host-2:
-      tags: tag2 tag3
+      tags: tag2,tag3,None # None means to also handle any untagged
 
   # configure graphite connection
   graphite:
-    # host name for sending metrics in
+    # host name for sending metrics in, used to make connections from your shinken node to your carbon-cache on port 2003
     host: graphite
-    # uri for rendering graphs in the shinken ui
+    # uri for rendering graphs in the shinken ui, used when rendering
+    # HTML, to make connections between a web browers and your
+    # graphite-web
     uri: http://graphite/

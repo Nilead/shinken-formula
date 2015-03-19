@@ -26,7 +26,7 @@ Example::
     # copy the pack to the minion
     my-pack: salt://my-custom-pack
     # if the source is missing then pull from shinken.io
-    pack-windows:
+    windows:
 
 
 .. _packs: http://shinken.readthedocs.org/en/latest/14_contributing/create-and-push-packs.html
@@ -49,7 +49,7 @@ Available states
 
 Configures this node as the primary Shinken_ node. Shinken_ requires
 that the master node has configuration about all daemons. See the
-``workers`` key in the ``pillar.example``.
+``pollers`` key in the ``pillar.example``.
 
 * arbiter
 * broker
@@ -59,36 +59,21 @@ that the master node has configuration about all daemons. See the
   * port 5667 - nsca_ with xor encryption
   * port 7760 - `ws_arbiter`_ for submitting external commands
 * scheduler
-  * retains status in memcached
-
-Important pillar settings:
-
-* ``shinken:graphite:host`` host name for sending metrics in
-* ``shinken:graphite:uri`` uri for rendering graphs in the shinken ui
-* ``shinken:config_repo:host`` git server
-* ``shinken:config_repo:uri`` git clone URI
-* ``shinken:config_repo:ssh_id`` ssh identity to use
-* ``shinken:workers`` data about the the worker nodes, used to
-  generate shinken config
+  * configured for the default "All" realm
+* poller
+  * configured for the default "All" realm and untagged hosts
 
 .. _nsca: http://exchange.nagios.org/directory/Addons/Passive-Checks/NSCA--2D-Nagios-Service-Check-Acceptor/details
 .. _ws_arbiter: https://github.com/shinken-monitoring/mod-ws-arbiter
 
-``shinken.worker``
+``shinken.poller``
 ------------------
 
-Runs checks and reports back.
-
-* poller
-* scheduler
-
-Important pillar settings:
-
-* ``shinken:worker:snmp_community`` default snmp community for checks
-* ``shinken:packs`` what extra packs to install
+Nodes that runs checks and reports back to the primary. Listens for
+instructions from other daemons on port 7771.
 
 
 TODO ``shinken.secondary``
 --------------------------
 
-Configures this node as a spare for the primary
+Configures this node as a spare daemons for the primary

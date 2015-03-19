@@ -1,9 +1,8 @@
+{% from "shinken/map.jinja" import packages with context %}
 
 shinken-deps:
   pkg.installed:
-    - pkgs:
-      - python-pycurl
-      - python-pip
+    - names: {{packages.shinken}}
 
 shinken:
   user.present:
@@ -12,26 +11,14 @@ shinken:
     - home: /var/lib/shinken
 
   pip.installed:
+    - name: shinken
     - require:
       - pkg: shinken-deps
       - user: shinken
 
-  cmd.wait:
+  cmd.run:
     - user: shinken
     - name: shinken --init
-    - watch:
+    - require:
         - pip: shinken
-
-# turn off all daemons for starters, we'll turn them on in other sls
-# files
-{% from 'shinken/macros.sls' import disable_daemon %}
-{% for d in ['brokerd', 'pollerd', 'reactionnerd', 'receiverd', 'schedulerd'] %}
-# {disable_daemon(d)}
-{% endfor %}
-
-# some states to trigger restarts
-
-shinken-arbiter.reload:
-  module.wait:
-    - name: service.reload
-    - m_name: shinken-arbiter
+        - user: shinken

@@ -1,8 +1,5 @@
-{% from 'shinken/macros.sls' import shinken_config, enable_module %}
-
-{% set worker = salt['pillar.get']('shinken:worker',
-  default={'snmp_community': 'public'},
-  merge=True) %}
+# install the shinken poller daemon and some plugins
+{% from "shinken/map.jinja" import packages with context %}
 
 include:
   - shinken.base
@@ -10,11 +7,7 @@ include:
 
 poller-deps:
   pkg.installed:
-    - pkgs:
-        - nagios-plugins
-        - libnet-snmp-perl
-        - snmp
-        - snmp-mibs-downloader
+    - names: {{packages.poller}}
 
 /usr/lib/nagios/plugins/check_icmp:
   file.managed:
@@ -51,31 +44,13 @@ snmp-configuration:
     - watch:
       - pkg: poller-deps
 
-/etc/shinken/resource.d/snmp.cfg:
-  file.replace:
-    - pattern: |
-        ^\$SNMPCOMMUNITYREAD\$=.*
-    - repl: |
-        $SNMPCOMMUNITYREAD$={{worker.snmp_community}}
-    - require:
-      - pip: shinken
-
-shinken-worker:
+# enable services
+shinken-poller:
   grains.present:
     - value: True
-
-{{enable_module('pickle-retention-file-generic')}}
-{{enable_module('pickle-retention-file-scheduler')}}
-
-# enable services
-{% for service in ['scheduler', 'poller'] %}
-
-shinken service - {{service}}:
   service.running:
-    - name: shinken-{{service}}
     - enable: True
-    - watch:
+    - require:
       - pip: shinken
+    - watch:
       - file: /etc/shinken/*
-
-{% endfor %}

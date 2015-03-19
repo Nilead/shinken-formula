@@ -1,4 +1,7 @@
-{% set shinken = salt['grains.filter_by']({
-  'default' : {
+{% set packages = salt['grains.filter_by']({
+  'Debian': {
+    'shinken': ['python-pycurl', 'python-pip'],
+    'config': ['git-core'],
+    'poller': ['nagios-plugins', 'libnet-snmp-perl', 'snmp', 'snmp-mibs-downloader']
   }
-}, merge=salt['pillar.get']('shinken:lookup'), default='default') %}
+}, merge=salt['pillar.get']('shinken:lookup')) %}
