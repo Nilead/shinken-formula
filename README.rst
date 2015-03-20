@@ -1,15 +1,14 @@
-salt-formula-shinken
-====================
+shinken-formula
+===============
 
 Formula to set up and configure Shinken_ on Debian-based systems
-
-.. _Shinken: http://shinken-monitoring.org/
 
 .. note::
 
     See the full `Salt Formulas installation and usage instructions
     <http://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html>`_.
 
+.. _Shinken: http://shinken-monitoring.org/
 
 Installing additional packs
 ---------------------------
