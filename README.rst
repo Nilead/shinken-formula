@@ -43,7 +43,7 @@ Available states
 .. contents::
    :local:
 
-``shinken.primary``
+``shinken``
 -------------------
 
 Configures this node as the primary Shinken_ node. Shinken_ requires
@@ -81,7 +81,7 @@ Nodes that runs checks and reports back to the primary. Listens for
 instructions from other daemons on port 7771.
 
 
-TODO ``shinken.secondary``
+TODO ``shinken.spare``
 --------------------------
 
 Configures this node as a spare daemons for the primary
