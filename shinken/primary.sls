@@ -26,8 +26,13 @@ shinken-primary:
 {{enable_module(mod)}}
 {% endfor %}
 
+# configure the arbiter
+{{shinken_config('arbiters/arbiter-master.cfg', 'address', grains['fqdn'])}}
+{{shinken_config('arbiters/arbiter-master.cfg', 'host_name', grains['fqdn'])}}
+
 # configure the broker
 {{shinken_config('brokers/broker-master.cfg', 'modules', 'webui,graphite')}}
+{{shinken_config('brokers/broker-master.cfg', 'address', grains['fqdn'])}}
 {{shinken_config('modules/graphite.cfg', 'host', graphite.host, 'graphite')}}
 
 # configure the web ui
@@ -37,6 +42,7 @@ shinken-primary:
 
 # configure the receiver
 {{shinken_config('receivers/receiver-master.cfg', 'modules', 'nsca,ws-arbiter')}}
+{{shinken_config('receivers/receiver-master.cfg', 'address', grains['fqdn'])}}
 
 # configure the scheduler
 {{shinken_config('schedulers/scheduler-master.cfg', 'modules', 'pickle-retention-file')}}
