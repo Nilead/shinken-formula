@@ -52,5 +52,12 @@ shinken-poller:
     - enable: True
     - require:
       - pip: shinken
-    - watch:
-      - file: /etc/shinken/*
+
+# fix the poller init script? https://github.com/naparuba/shinken/pull/1544
+fix-init-script:
+  file.replace:
+    - name: /etc/init.d/shinken-poller
+    - pattern: curdir=\$\(dirname "\$0"\)
+    - repl: curdir=$(dirname $(readlink -f "$0"))
+    - require:
+        - pip: shinken
