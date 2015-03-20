@@ -16,9 +16,10 @@ shinken:
       - pkg: shinken-deps
       - user: shinken
 
-  cmd.run:
+  cmd.wait:
     - user: shinken
     - name: shinken --init
     - require:
-        - pip: shinken
         - user: shinken
+    - watch:
+        - pip: shinken
