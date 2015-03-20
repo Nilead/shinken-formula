@@ -20,7 +20,7 @@ shinken-primary:
     - value: True
 
 # install/enable shinken modules
-{% for mod in ['webui', 'auth-cfg-password', 'sqlitedb', 'graphite', 'ui-graphite', 'nsca', 'ws-arbiter', 'pickle-retention-file-scheduler', 'pickle-retention-file-generic'] %}
+{% for mod in ['webui', 'auth-cfg-password', 'sqlitedb', 'graphite', 'ui-graphite', 'nsca', 'ws-arbiter', 'pickle-retention-file-scheduler', 'pickle-retention-file-generic', 'livestatus', 'logstore-sqlite'] %}
 {{enable_module(mod)}}
 {% endfor %}
 
@@ -29,7 +29,7 @@ shinken-primary:
 {{shinken_config('arbiters/arbiter-master.cfg', 'host_name', grains['fqdn'])}}
 
 # configure the broker
-{{shinken_config('brokers/broker-master.cfg', 'modules', 'webui,graphite')}}
+{{shinken_config('brokers/broker-master.cfg', 'modules', 'webui,graphite,livestatus')}}
 {{shinken_config('brokers/broker-master.cfg', 'address', grains['fqdn'])}}
 {{shinken_config('modules/graphite.cfg', 'host', graphite.host, 'graphite')}}
 

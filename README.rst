@@ -53,7 +53,8 @@ that the master node has configuration about all daemons. See the
 * arbiter
 * broker
 
-  * port: 7767 - website w/ graphite support
+  * port: 7767 - website w/ graphite integration
+  * port: 50000 - livestatus_
 
 * reactionner
 * receiver
@@ -71,6 +72,7 @@ that the master node has configuration about all daemons. See the
 
 .. _nsca: http://exchange.nagios.org/directory/Addons/Passive-Checks/NSCA--2D-Nagios-Service-Check-Acceptor/details
 .. _ws_arbiter: https://github.com/shinken-monitoring/mod-ws-arbiter
+.. _livestatus: https://mathias-kettner.de/checkmk_livestatus.html
 
 ``shinken.poller``
 ------------------
