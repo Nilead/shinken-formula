@@ -53,14 +53,21 @@ that the master node has configuration about all daemons. See the
 
 * arbiter
 * broker
+
   * port: 7767 - website w/ graphite support
+
 * reactionner
 * receiver
+
   * port 5667 - nsca_ with xor encryption
   * port 7760 - `ws_arbiter`_ for submitting external commands
+
 * scheduler
+
   * configured for the default "All" realm
+
 * poller
+
   * configured for the default "All" realm and untagged hosts
 
 .. _nsca: http://exchange.nagios.org/directory/Addons/Passive-Checks/NSCA--2D-Nagios-Service-Check-Acceptor/details
