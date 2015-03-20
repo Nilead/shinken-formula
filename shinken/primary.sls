@@ -12,9 +12,7 @@
 
 
 include:
-  - shinken.base
-  - shinken.packs
-  - shinken.poller
+  - shinken.poller_base
   - shinken.config
 
 shinken-primary:
@@ -79,17 +77,13 @@ shinken-primary:
     - require:
         - pip: shinken
 
-# enable daemons
-{% for service in ['arbiter', 'broker', 'reactionner', 'receiver', 'scheduler'] %}
-
-shinken-{{service}} service:
+# enable all daemons
+shinken service:
   service.running:
-    - name: shinken-{{service}}
+    - name: shinken
     - enable: True
     - require:
       - pip: shinken
-
-{% endfor %}
 
 # restart the arbiter when config changes, it will distribute the rest
 restart arbiter:
@@ -97,7 +91,7 @@ restart arbiter:
     - name: service.restart
     - m_name: shinken-arbiter
     - require:
-        - service: shinken-arbiter service
+        - pip: shinken
     - watch:
         - file: /etc/shinken/*
         - git: config*
