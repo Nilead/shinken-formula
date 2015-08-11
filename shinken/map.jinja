@@ -2,6 +2,6 @@
   'Debian': {
     'shinken': ['python-pycurl', 'python-pip'],
     'config': ['git-core'],
-    'poller': ['nagios-plugins', 'libnet-snmp-perl', 'snmp', 'snmp-mibs-downloader']
+    'poller': ['nagios-plugins', 'libnet-snmp-perl', 'snmp']
   }
 }, merge=salt['pillar.get']('shinken:lookup')) %}
