@@ -94,4 +94,4 @@ restart arbiter:
         - pip: shinken
     - watch:
         - file: /etc/shinken/*
-        - git: config*
+#        - git: config*
