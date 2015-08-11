@@ -52,7 +52,7 @@ shinken-primary:
     - text: "cfg_dir=/opt/shinken-config"
     - require:
         - pip: shinken
-        - git: config*
+#        - git: config*
 
 # fill in other defaults
 /etc/shinken/resource.d/snmp.cfg:
