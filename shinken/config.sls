@@ -16,7 +16,7 @@ config deps:
     - require:
       - user: shinken
 
-config clone:
+#config clone:
 #  git.latest:
 #    - name: {{shared_repo.uri}}
 #    - target: /opt/shinken-config
@@ -24,15 +24,15 @@ config clone:
 #    - require:
 #      - pkg: config deps
 #      - ssh_known_hosts: config*
-  file.directory:
-    - name: /opt/shinken-config
-    - user: shinken
-    - group: shinken
-    - recurse:
-      - user
-      - group
-    - require:
-      - user: shinken
-      - git: config*
-    - watch:
-      - git: config*
+#  file.directory:
+#    - name: /opt/shinken-config
+#    - user: shinken
+#    - group: shinken
+#    - recurse:
+#      - user
+#      - group
+#    - require:
+#      - user: shinken
+#      - git: config*
+#    - watch:
+#      - git: config*
